@@ -25,10 +25,10 @@ def bfs(init_node):
         for act in actions:
             child = ds.Node(node.state, node, None, act, node.cost+1)
             if child.state not in explored and child.state not in [n.state for n in frontier]:
+                nodes_generated_num += 1
                 if ds.goal_test(child.state):
                     return ds.get_solution(child)
                 frontier.append(child)
-                nodes_generated_num += 1
 
 
 def beauty_print(solution):

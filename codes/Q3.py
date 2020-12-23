@@ -21,13 +21,13 @@ def a_star(init_node):
             return 'failure'
         node = frontier.pop(0)
         nodes_expanded_num += 1
+        if ds.goal_test(node.state):
+                    return ds.get_solution(node)
         explored.append(node.state)
         actions = ds.get_all_actions(node)
         for act in actions:
             child = ds.Node_H(node.state, node, None, act, node.cost+1)
             if child.state not in explored and child.state not in [n.state for n in frontier]:
-                if ds.goal_test(child.state):
-                    return ds.get_solution(child)
                 frontier.append(child)
                 nodes_generated_num += 1
 
@@ -42,7 +42,7 @@ def beauty_print(solution):
 
 
 def main():
-    initial_state = ds.init_game("test4.txt")
+    initial_state = ds.init_game("test3.txt")
     initial_node = ds.Node_H(initial_state, None, None, None, 0)
     solution = a_star(initial_node)
     beauty_print(solution)
