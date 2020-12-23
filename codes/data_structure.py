@@ -56,6 +56,7 @@ class Node:
         self.par_action = par_action # the action that parent has done to generate this child
         self.cost = cost
 
+
     def __str__(self):
         string = ""
         string += "Cost: " + str(self.cost) + "  Parent Action: " + str(self.par_action) + "\n"
@@ -64,6 +65,49 @@ class Node:
 
     def __repr__(self):
         return str(self)
+
+
+class Node_H(Node):
+    def __init__(self, state, parent, action, par_action, cost):
+        super().__init__(state, parent, action, par_action, cost)
+        self.heuristic = self.calculate_heuristic()
+        self.f = self.heuristic + self.cost
+        #t
+
+
+    def calculate_heuristic(self):
+        global colors_num
+        rows = self.state.rows
+        colors = []
+        # extracting all the color names
+        for row in rows:
+            lets_break = False
+            for elem in row:
+                if elem.color not in colors:
+                    colors.append(elem.color)
+                if len(colors) >= colors_num:
+                    lets_break = True
+                    break
+            if lets_break:
+                break
+        # detecting the row at which there are the maximum number of cards of a particular color and the number of cards of this color in that row
+        color_maxrow = {}
+        color_maxnum = {}
+        for color in colors:
+            color_maxnum[color] = 0
+            color_maxrow[color] = 0
+            for row in range(len(rows)):
+                c = [r.color for r in rows[row]].count(color)
+                if c > color_maxnum.get(color):
+                    color_maxrow[color] = row
+                    color_maxnum[color] = c
+        # at the very least, we have to move cards_num - color_maxnum['color'] for each color to find an answer
+        heuristic = 0
+        for color in colors:
+            heuristic += (cards_num - color_maxnum[color])
+        return heuristic
+
+
 
 
 class Action:
