@@ -47,11 +47,23 @@ class State:
 
 class Node:
     def __init__(self, state, parent, action, par_action, cost):
-        self.state = state
+        if par_action is None:
+            self.state = state
+        else:
+            self.state = calculate_state(state, par_action)
         self.parent = parent
         self.action = action
         self.par_action = par_action # the action that parent has done to generate this child
         self.cost = cost
+
+    def __str__(self):
+        string = ""
+        string += "Cost: " + str(self.cost) + "  Parent Action: " + str(self.par_action) + "\n"
+        string += str(self.state) + "\n"
+        return string
+
+    def __repr__(self):
+        return str(self)
 
 
 class Action:
@@ -60,7 +72,7 @@ class Action:
         self.second_row = second_row
 
     def __str__(self):
-        return 'action: ' + str(self.first_row + 1) + ' to ' + str(self.second_row + 1)
+        return str(self.first_row + 1) + ' to ' + str(self.second_row + 1)
 
     def __repr__(self):
         return str(self)
@@ -129,13 +141,24 @@ def get_solution(node):
     solution = []
     child = node
     parent = node.parent
+    parent.action = child.par_action
     solution.insert(0, child)
     while parent is not None:
         child = parent
-        parent.action = child.par_acion
         parent = parent.parent
+        if parent is not None:
+            parent.action = child.par_action
         solution.insert(0, child)
     return solution
+
+
+def calculate_state(state, action):
+    next_state = copy.deepcopy(state)
+    r1 = action.first_row
+    r2 = action.second_row
+    card = next_state.rows[r1].pop()
+    next_state.rows[r2].append(card)
+    return next_state
 
         
 
