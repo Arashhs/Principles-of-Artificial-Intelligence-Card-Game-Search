@@ -72,7 +72,6 @@ class Node_H(Node):
         super().__init__(state, parent, action, par_action, cost)
         self.heuristic = self.calculate_heuristic()
         self.f = self.heuristic + self.cost
-        #t
 
 
     def calculate_heuristic(self):
@@ -106,6 +105,15 @@ class Node_H(Node):
         for color in colors:
             heuristic += (cards_num - color_maxnum[color])
         return heuristic
+
+    def __str__(self):
+        string = ""
+        string += "Cost: " + str(self.cost) + "  Heuristic: " + str(self.heuristic) +"  F: " + str(self.f) +"  Parent Action: " + str(self.par_action) + "\n"
+        string += str(self.state) + "\n"
+        return string
+
+    def __repr__(self):
+        return str(self)
 
 
 

@@ -16,6 +16,7 @@ def a_star(init_node):
     frontier.append(init_node)
     
     while True:
+        frontier.sort(key=lambda x: x.f)
         if frontier == []:
             return 'failure'
         node = frontier.pop(0)
@@ -35,7 +36,7 @@ def beauty_print(solution):
     solution_depth = solution[-1].cost
     print("Solution Depth (N): {}, Nodes Generated: {}, Nodes Expanded: {}\n".format(solution_depth, nodes_generated_num, nodes_expanded_num))
     for node in solution:
-        print("Depth: {}, Action: {}".format(node.cost, node.action))
+        print("Depth: {}, Heuristic: {}, F: {}, Action: {}".format(node.cost, node.heuristic, node.f, node.action))
         print(node.state, "\n")
 
 
