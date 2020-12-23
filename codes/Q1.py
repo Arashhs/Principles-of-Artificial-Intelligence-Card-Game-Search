@@ -41,7 +41,7 @@ def beauty_print(solution):
 
 
 def main():
-    initial_state = ds.init_game("test.txt")
+    initial_state = ds.init_game("test3.txt")
     initial_node = ds.Node(initial_state, None, None, None, 0)
     solution = bfs(initial_node)
     beauty_print(solution)

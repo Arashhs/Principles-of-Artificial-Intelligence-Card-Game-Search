@@ -2,5 +2,5 @@
 5g 4g 3g 2g 1g
 5r 4r 3r 2r 1r
 #
-5r 4r 3r 2r 1r
+5d 4d 3d 2d 1d
 #

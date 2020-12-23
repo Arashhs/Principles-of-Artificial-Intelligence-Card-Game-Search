@@ -141,7 +141,8 @@ def get_solution(node):
     solution = []
     child = node
     parent = node.parent
-    parent.action = child.par_action
+    if parent is not None:
+        parent.action = child.par_action
     solution.insert(0, child)
     while parent is not None:
         child = parent
